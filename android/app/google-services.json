@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "713848751978",
+    "project_id": "mealflavor-9cf79",
+    "storage_bucket": "mealflavor-9cf79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713848751978:android:1045007572729fc080c713",
+        "android_client_info": {
+          "package_name": "com.example.anti_gaspillage_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713848751978-27t49t4t046i69sgq2fcf0g4jgofphjq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anti_gaspillage_app",
+            "certificate_hash": "183b2f82bf6de7dc7551cd43732039739adeb2a6"
+          }
+        },
+        {
+          "client_id": "713848751978-mqo32dpukagcv4ftph63scli69jh81r0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActIiZd8mVQ3b_sDsK9tr3wQUXwbnvr98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713848751978-mqo32dpukagcv4ftph63scli69jh81r0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "713848751978-fhqbfcuu3sd3luh0bt43h4k8h7vikr10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.antiGaspillageApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
