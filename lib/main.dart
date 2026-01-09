@@ -1,7 +1,6 @@
 import 'package:anti_gaspillage_app/screens/auth.dart';
 import 'package:anti_gaspillage_app/screens/home.dart';
 import 'package:anti_gaspillage_app/screens/merchant_home_screen.dart'; // Import MerchantHomeScreen
-import 'package:anti_gaspillage_app/screens/profile.dart';
 import 'package:anti_gaspillage_app/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Anti-Gaspillage',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,

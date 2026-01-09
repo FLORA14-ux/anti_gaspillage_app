@@ -4,7 +4,9 @@ class Invendu {
   final String id;
   final String titre;
   final String description;
-  final double prix;
+  final double prixNormal;
+  final double prixReduit;
+  final String imageUrl;
   final int quantite;
   final String commercantId;
   final String statut;
@@ -15,7 +17,9 @@ class Invendu {
     required this.id,
     required this.titre,
     required this.description,
-    required this.prix,
+    required this.prixNormal,
+    required this.prixReduit,
+    required this.imageUrl,
     required this.quantite,
     required this.commercantId,
     required this.statut,
@@ -30,7 +34,9 @@ class Invendu {
       id: doc.id,
       titre: data['titre'] ?? '',
       description: data['description'] ?? '',
-      prix: (data['prix'] ?? 0).toDouble(),
+      prixNormal: (data['prixNormal'] ?? 0).toDouble(),
+      prixReduit: (data['prixReduit'] ?? 0).toDouble(),
+      imageUrl: data['imageUrl'] ?? '',
       quantite: data['quantite'] ?? 0,
       commercantId: data['commercantId'] ?? '',
       statut: data['statut'] ?? 'disponible',
@@ -44,7 +50,9 @@ class Invendu {
     return {
       'titre': titre,
       'description': description,
-      'prix': prix,
+      'prixNormal': prixNormal,
+      'prixReduit': prixReduit,
+      'imageUrl': imageUrl,
       'quantite': quantite,
       'commercantId': commercantId,
       'statut': statut,

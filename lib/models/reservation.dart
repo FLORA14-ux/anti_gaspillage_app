@@ -6,6 +6,7 @@ class Reservation {
   final String consommateurId;
   final String statut; // en_attente / confirmé
   final Timestamp createdAt;
+  final int quantite;
 
   Reservation({
     required this.id,
@@ -13,6 +14,7 @@ class Reservation {
     required this.consommateurId,
     required this.statut,
     required this.createdAt,
+    required this.quantite,
   });
 
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
@@ -23,6 +25,7 @@ class Reservation {
       consommateurId: data['consommateurId'] ?? '',
       statut: data['statut'] ?? 'en_attente',
       createdAt: data['createdAt'] ?? Timestamp.now(),
+      quantite: data['quantite'] ?? 1,
     );
   }
 
@@ -32,6 +35,7 @@ class Reservation {
       'consommateurId': consommateurId,
       'statut': statut,
       'createdAt': createdAt,
+      'quantite': quantite,
     };
   }
 }
