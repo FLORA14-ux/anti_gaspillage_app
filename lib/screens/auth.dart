@@ -34,12 +34,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
     try {
       if (_isLogin) {
-        final userCredential = await _authService.signIn(_enteredEmail, _enteredPassword);
-        // Navigate to home screen
+        await _authService.signIn(_enteredEmail, _enteredPassword);
       } else {
-        final userCredential = await _authService.signUp(_enteredEmail, _enteredPassword, _selectedRole);
-        // Navigate to home screen
+        await _authService.signUp(_enteredEmail, _enteredPassword, _selectedRole);
       }
+      // Navigation will be handled by the StreamBuilder in main.dart
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -48,7 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
     } finally {
-      if(mounted){
+      if (mounted) {
         setState(() {
           _isLoading = false;
         });
@@ -81,7 +80,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
                             validator: (value) {
-                              if (value == null || value.trim().isEmpty || !value.contains('@')) {
+                              if (value == null ||
+                                  value.trim().isEmpty ||
+                                  !value.contains('@')) {
                                 return 'Please enter a valid email address.';
                               }
                               return null;
@@ -104,39 +105,45 @@ class _AuthScreenState extends State<AuthScreen> {
                             },
                           ),
                           if (!_isLogin)
-                            Column(
-                              children: [
-                                RadioListTile(
-                                  title: const Text('Consommateur'),
-                                  value: 'consommateur',
-                                  groupValue: _selectedRole,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedRole = value!;
-                                    });
-                                  },
-                                ),
-                                RadioListTile(
-                                  title: const Text('Commerçant'),
-                                  value: 'commercant',
-                                  groupValue: _selectedRole,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedRole = value!;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 8.0),
+                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text("Je suis un:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  RadioListTile<String>(
+                                    title: const Text('Consommateur'),
+                                    value: 'consommateur',
+                                    groupValue: _selectedRole,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedRole = value!;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: const Text('Commerçant'),
+                                    value: 'commercant',
+                                    groupValue: _selectedRole,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedRole = value!;
+                                      });
+                                    },
+                                  ),
+                                ],
+                               ),
+                             ),
                           const SizedBox(height: 12),
                           if (_isLoading) const CircularProgressIndicator(),
                           if (!_isLoading)
                             ElevatedButton(
                               onPressed: _submit,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primaryContainer,
                               ),
-                              child: Text(_isLogin ? 'Login' : 'Signup'),
+                              child: Text(_isLogin ? 'Connexion' : 'Inscription'),
                             ),
                           if (!_isLoading)
                             TextButton(
@@ -145,7 +152,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _isLogin = !_isLogin;
                                 });
                               },
-                              child: Text(_isLogin ? 'Create an account' : 'I already have an account'),
+                              child: Text(_isLogin
+                                  ? 'Créer un compte'
+                                  : 'J\'ai déjà un compte'),
                             ),
                         ],
                       ),

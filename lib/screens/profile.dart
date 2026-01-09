@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:anti_gaspillage_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,18 +8,19 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Screen'),
+        title: const Text('Profil Commerçant'),
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              AuthService().signOut();
             },
-            icon: const Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.logout),
+            tooltip: 'Déconnexion',
           ),
         ],
       ),
       body: const Center(
-        child: Text('Welcome Shop Owner!'),
+        child: Text('Bienvenue, commerçant !'),
       ),
     );
   }

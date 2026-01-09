@@ -21,24 +21,28 @@ class AuthService {
       });
 
       return userCredential;
-    } on FirebaseAuthException catch (e) {
-      // Gérer les erreurs, par exemple, si l'email est déjà utilisé
-      print(e.message);
-      return null;
+    } on FirebaseAuthException {
+      // Let the UI handle the exception
+      rethrow;
     }
   }
 
-  Future<UserCredential?> signIn(String email, String password) async {
+  Future<UserCredential> signIn(String email, String password) async {
     try {
       UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       return userCredential;
-    } on FirebaseAuthException catch (e) {
-      // Gérer les erreurs
-      print(e.message);
-      return null;
+    } on FirebaseAuthException {
+      // Let the UI handle the exception
+      rethrow;
     }
   }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 }

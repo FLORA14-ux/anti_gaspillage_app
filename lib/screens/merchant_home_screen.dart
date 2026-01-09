@@ -1,13 +1,13 @@
-import 'package:anti_gaspillage_app/screens/add_invendu_screen.dart';
-import 'package:anti_gaspillage_app/screens/invendu_detail_screen.dart';
-import 'package:anti_gaspillage_app/services/auth_service.dart';
-import 'package:flutter/material.dart';
+import 'package:anti_gaspillage_app/models/invendu.dart';
+import 'package:anti_gaspillage_app/screens/add_invendu_screen.dart'; // Import AddInvenduScreen
+import 'package:anti_gaspillage_app/screens/merchant_invendu_detail_screen.dart'; // Import MerchantInvenduDetailScreen
+import 'package:anti_gaspillage_app/services/auth_service.dart'; // For logout
+import 'package:anti_gaspillage_app/services/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/invendu.dart';
-import '../services/firestore_service.dart';
+import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class MerchantHomeScreen extends StatelessWidget {
+  const MerchantHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Offres Anti-Gaspillage'),
+        title: const Text('Mes Invendus (Commerçant)'),
         actions: [
           IconButton(
             onPressed: () {
@@ -27,21 +27,19 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: firestoreService.getInvendus(),
+        stream: firestoreService.getInvendusForMerchant(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            // Affiche l'erreur dans la console et sur l'écran pour le débogage
-            print("Erreur Firestore: ${snapshot.error}");
-            return Center(child: Text('Erreur: ${snapshot.error}'));
+            return Center(child: Text('Une erreur est survenue: ${snapshot.error}'));
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
-              child: Text('Aucune offre disponible pour le moment.'),
+              child: Text('Vous n\'avez pas encore publié d\'invendus.'),
             );
           }
 
@@ -59,8 +57,7 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) =>
-                            InvenduDetailScreen(invendu: invendu),
+                        builder: (context) => MerchantInvenduDetailScreen(invendu: invendu),
                       ),
                     );
                   },
@@ -69,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    '${invendu.description}\nQuantité: ${invendu.quantite}',
+                    '${invendu.description}\nQuantité: ${invendu.quantite}\nStatut: ${invendu.statut}',
                   ),
                   trailing: Text(
                     '${invendu.prix.toStringAsFixed(2)} €',
@@ -89,7 +86,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AddInvenduScreen()),
+            MaterialPageRoute(
+              builder: (context) => const AddInvenduScreen(),
+            ),
           );
         },
         child: const Icon(Icons.add),
